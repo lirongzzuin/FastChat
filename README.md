@@ -69,7 +69,7 @@ Kafka를 사용한 메시지 큐 기반 비동기 처리를 통해 메시지를 
 ## 🔥 실행 방법
 ### 1️⃣ **프로젝트 클론**
 ```sh
-git clone https://github.com/YOUR_GITHUB_ID/FastChat.git
+git clone https://github.com/lirongzzuin/FastChat.git
 cd FastChat
 ```
 
