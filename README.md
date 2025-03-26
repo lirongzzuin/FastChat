@@ -1,48 +1,51 @@
-# 🚀 FastChat - 실시간 메시지 큐 시스템
+# 🚀 FastChat - 실시간 메시지 큐 시스템 (Kafka & Redis 기반)
 
 ## 📌 프로젝트 소개
-**FastChat**은 Redis와 Kafka를 활용한 실시간 채팅 및 알림 시스템입니다. 
-Kafka를 사용한 메시지 큐 기반 비동기 처리를 통해 메시지를 빠르게 전송하며, Redis를 활용하여 최신 메시지 및 사용자 상태를 캐싱합니다. 
+FastChat은 **Kafka와 Redis**를 활용하여 **고성능 실시간 메시징**을 지원하는 프로젝트입니다. 
+이 프로젝트는 **Spring Boot, JPA, Kotlin**, 그리고 **도메인 주도 설계(DDD)**를 기반으로 설계되었으며, 
+**객체지향 설계(OOP), 테스트 주도 개발(TDD), 리팩토링**을 고려하여 구현됩니다.
 
-## 🎯 주요 기능
-✅ **실시간 채팅** - WebSocket을 활용한 빠른 메시지 전송  
-✅ **Kafka 기반 비동기 메시징** - 메시지 송수신을 Kafka Queue로 처리  
-✅ **Redis 캐싱** - 최근 50개의 메시지를 Redis에 저장하여 빠르게 조회  
-✅ **Redis Pub/Sub** - 실시간 메시지 스트리밍 지원  
-✅ **JWT 인증** - 사용자 로그인 및 보안 강화  
-✅ **Docker 지원** - 손쉬운 배포를 위한 컨테이너 환경 제공  
+## 🎯 주요 목표
+✅ **Java/Kotlin 기반의 Spring 기술 스택 숙련도 향상**  
+✅ **Kafka와 Redis를 활용한 고성능 메시징 시스템 구현**  
+✅ **RDBMS(MySQL) 및 JPA를 활용한 데이터 모델링 최적화**  
+✅ **OOP, TDD, Refactoring을 적용한 클린 코드 작성**  
+✅ **Docker 및 CI/CD를 활용한 배포 자동화**  
 
 ## 🛠️ 기술 스택
-- **Backend**: Spring Boot, Spring Security, WebSocket
-- **Database**: MySQL
+- **Backend**: Java 17 / Kotlin, Spring Boot 3.x, Spring Security
+- **Database**: MySQL (RDBMS 모델링 최적화)
 - **Caching**: Redis (Sorted Set 활용)
 - **Message Queue**: Kafka (Producer & Consumer)
-- **Auth**: JWT (Json Web Token)
-- **DevOps**: Docker, Docker Compose
+- **Testing**: JUnit 5, Mockito, Testcontainers (TDD 적용)
+- **Architecture**: DDD, Hexagonal Architecture 적용
+- **DevOps**: Docker, Docker Compose, CI/CD (GitHub Actions)
 
-## 📂 프로젝트 구조
+## 📂 프로젝트 구조 (DDD 기반 설계)
 ```
 📂 fastchat-backend
  ├── 📂 config
- │   ├── KafkaConfig.java  # Kafka 설정
- │   ├── RedisConfig.java  # Redis 설정
- │   ├── SecurityConfig.java  # JWT 인증 설정
- ├── 📂 controller
- │   ├── ChatController.java  # 채팅 관련 API
- │   ├── UserController.java  # 사용자 관련 API
- ├── 📂 service
- │   ├── ChatService.java  # 채팅 처리 로직
- │   ├── UserService.java  # 사용자 관리 로직
- ├── 📂 repository
- │   ├── ChatRepository.java  # 메시지 저장소 (JPA)
- │   ├── UserRepository.java  # 사용자 저장소 (JPA)
- ├── 📂 domain
- │   ├── User.java  # 사용자 엔티티
- │   ├── ChatMessage.java  # 메시지 엔티티
- ├── 📂 dto
- │   ├── ChatMessageDTO.java  # 메시지 데이터 전송 객체
- │   ├── UserDTO.java  # 사용자 데이터 전송 객체
- ├── FastChatApplication.java  # 메인 애플리케이션
+ │   ├── KafkaConfig.kt  # Kafka 설정
+ │   ├── RedisConfig.kt  # Redis 설정
+ │   ├── SecurityConfig.kt  # JWT 인증 설정
+ ├── 📂 domain  # 도메인 계층
+ │   ├── 📂 model  # 핵심 엔티티
+ │   │   ├── User.kt  # 사용자 모델
+ │   │   ├── ChatMessage.kt  # 채팅 메시지 모델
+ │   ├── 📂 repository  # 도메인 저장소
+ │   │   ├── ChatRepository.kt  # 메시지 저장소 (JPA)
+ │   │   ├── UserRepository.kt  # 사용자 저장소 (JPA)
+ ├── 📂 application  # 서비스 계층
+ │   ├── ChatService.kt  # 채팅 로직
+ │   ├── UserService.kt  # 사용자 관리 로직
+ ├── 📂 infrastructure  # 인프라 계층
+ │   ├── KafkaProducer.kt  # Kafka Producer
+ │   ├── KafkaConsumer.kt  # Kafka Consumer
+ │   ├── RedisCacheService.kt  # Redis 캐싱 로직
+ ├── 📂 presentation  # 컨트롤러 계층
+ │   ├── ChatController.kt  # 채팅 API
+ │   ├── UserController.kt  # 사용자 API
+ ├── FastChatApplication.kt  # 메인 애플리케이션
 ```
 
 ## 📌 API 명세서
@@ -89,4 +92,9 @@ mvn spring-boot:run
 - `http://localhost:8080/api/users/login` - 로그인 (JWT 발급)
 - `http://localhost:8080/api/chat/send` - 메시지 전송 (WebSocket 활용)
 
+## 📜 TDD 적용 계획
+✅ **UserService 테스트** (회원가입, 로그인)  
+✅ **ChatService 테스트** (메시지 저장, Kafka 발행)  
+✅ **Redis 캐싱 테스트** (최근 메시지 캐싱 확인)  
+✅ **Kafka Consumer 테스트** (메시지 정상 처리 확인) 
 
