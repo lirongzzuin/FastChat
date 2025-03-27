@@ -23,7 +23,7 @@
 ```
 📂 org.fastchat.fastchat
 ├── 📂 common
-│   ├── 📂 config                 # Kafka, Redis, Security, Swagger 설정
+│   ├── 📂 config                # Kafka, Redis, Security, Swagger 설정
 │   ├── 📂 jwt                   # JWT 유틸 및 필터
 │   └── 📂 exception             # 전역 예외 처리
 │
