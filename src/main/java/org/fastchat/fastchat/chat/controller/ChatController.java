@@ -27,10 +27,10 @@ public class ChatController {
             Principal principal
     ) {
         String username = principal.getName();
-        ChatMessageDTO dto = new ChatMessageDTO(username, message);
-        kafkaProducer.sendMessage(dto); // ✅ ChatMessageDTO 전달
+        ChatMessageDTO dto = new ChatMessageDTO(username, message, roomId);
+        kafkaProducer.sendMessage(dto); // ChatMessageDTO 전달
         redisCacheService.cacheMessage(roomId, dto);
-        return ResponseEntity.ok("✅ 메시지 전송 및 캐싱 완료");
+        return ResponseEntity.ok("메시지 전송 및 캐싱 완료");
     }
 
     @GetMapping("/history/{roomId}")
